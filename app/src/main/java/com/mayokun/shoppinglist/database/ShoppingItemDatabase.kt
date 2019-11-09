@@ -9,6 +9,11 @@ import androidx.room.RoomDatabase
  * Created by Mayokun Adeniyi on 2019-11-09.
  */
 
+/**
+ * This represents the Room Database for the Shopping Items.
+ * It creates a new Database if an instance does not exist and returns a
+ * reference to an already existing Database.
+ */
 @Database(entities = [ShoppingItem::class],version = 1, exportSchema = false)
 abstract class ShoppingItemDatabase : RoomDatabase(){
 

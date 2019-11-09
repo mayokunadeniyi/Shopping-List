@@ -7,6 +7,10 @@ import androidx.room.*
  * Created by Mayokun Adeniyi on 2019-11-09.
  */
 
+/**
+ * This creates the Database Access Object popularly known as a 'Dao'
+ * to insert, query, update, and delete from the Shopping Item Database
+ */
 @Dao
 interface ShoppingItemDao {
 
