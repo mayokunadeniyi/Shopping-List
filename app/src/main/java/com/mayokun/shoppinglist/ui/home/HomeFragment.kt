@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist
+package com.mayokun.shoppinglist.ui
 
 
 import android.os.Bundle
@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.databinding.FragmentHomeBinding
-import com.mayokun.shoppinglist.utils.NewItemFragment
+import com.mayokun.shoppinglist.utils.NewItemDialogFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
      * This shows the custom dialog for adding a new item
      */
     private fun createPopUp() {
-        val newItemFragment = NewItemFragment()
+        val newItemFragment = NewItemDialogFragment()
         val fragmentTransaction = fragmentManager?.beginTransaction()
         val prev = fragmentManager?.findFragmentByTag("NewItem")
         if (prev != null) {
