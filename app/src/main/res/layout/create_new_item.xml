@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="5dp" >
+        <RelativeLayout
+            android:padding="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/itemNameID"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/input_text_case"
+                android:hint="Item Name"
+                android:inputType="textCapWords"
+                android:paddingLeft="15dp"
+                android:paddingRight="2dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/itemQuantityID"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/itemNameID"
+                android:paddingLeft="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:paddingRight="2dp"
+                android:background="@drawable/input_text_case"
+                android:layout_marginTop="15dp"
+                android:hint="Item Quantity"
+                android:inputType="number|numberDecimal" />
+
+            <Button
+                android:id="@+id/save_item_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemQuantityID"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/save_new_item_button_case"
+                android:text="Save"
+                android:textColor="#FFF"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
