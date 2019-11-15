@@ -24,6 +24,6 @@ data class ShoppingItem(
     var itemQuantity: Int,
 
     @ColumnInfo(name = "date_created")
-    var dateItemCreated: String = getCurrentSystemTime()
+    var dateItemCreated: String = getCurrentSystemTime(System.currentTimeMillis())
 )
 

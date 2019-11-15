@@ -12,7 +12,7 @@ import java.lang.IllegalStateException
  * A simple [DialogFragment] subclass.
  * This creates the custom dialog screen to create a new item.
  */
-class NewItemFragment : DialogFragment() {
+class NewItemDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {

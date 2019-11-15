@@ -1,6 +1,8 @@
 package com.mayokun.shoppinglist.utils
 
 
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -10,11 +12,16 @@ import java.time.format.FormatStyle
  */
 
 /**
- * This gets the current system time and returns a formatted String
- * representing the time the Shopping Item was created
+ * Take the Long milliseconds returned by the system and stored in Room,
+ * and convert it to a nicely formatted string for display.
+ *
+ * EEEE - Display the long letter version of the weekday
+ * MMM - Display the letter abbreviation of the month
+ * dd-yyyy - day in month and full year numerically
+ * HH:mm - Hours and minutes in 24hr format
  */
-fun getCurrentSystemTime(): String {
-    val current = LocalDateTime.now()
-    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-    return current.format(formatter)
+@SuppressLint("SimpleDateFormat")
+fun getCurrentSystemTime(systemTime: Long): String {
+    return SimpleDateFormat("EEEE MMM-dd-yyyy' Time: 'HH:mm")
+        .format(systemTime).toString()
 }

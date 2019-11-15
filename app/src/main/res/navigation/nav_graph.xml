@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mayokun.shoppinglist.HomeFragment"
+        android:name="com.mayokun.shoppinglist.ui.home.HomeFragment"
         android:label="HomeFragment" />
 </navigation>
