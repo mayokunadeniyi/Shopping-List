@@ -25,4 +25,7 @@ interface ShoppingItemDao {
 
     @Query("SELECT * FROM shopping_list_table ORDER BY itemId DESC")
     fun getAllItems() :LiveData<List<ShoppingItem>>
+
+    @Query("SELECT * FROM shopping_list_table ORDER BY itemId DESC LIMIT 1")
+    fun getOneItem(): ShoppingItem?
 }

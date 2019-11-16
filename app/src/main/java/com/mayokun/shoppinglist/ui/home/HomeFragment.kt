@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.database.ShoppingItemDatabase
@@ -19,6 +20,7 @@ import com.mayokun.shoppinglist.utils.NewItemDialogFragment
 class HomeFragment : Fragment() {
 
     private lateinit var newItemFragment: NewItemDialogFragment
+    private lateinit var homeFragmentViewModel: HomeFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +38,15 @@ class HomeFragment : Fragment() {
 
         val homeFragmentViewModelFactory = HomeFragmentViewModelFactory(dataSource,newItemFragment)
 
-        val homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
+        homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
             .get(HomeFragmentViewModel::class.java)
+
+        //Observer to check if the database contains any items
+        homeFragmentViewModel.hasContent.observe(this, Observer { state ->
+            if (state){
+                //TODO: Show the list of items in the database
+            }
+        })
 
         binding.homeFragmentViewModel = homeFragmentViewModel
         binding.lifecycleOwner = this
