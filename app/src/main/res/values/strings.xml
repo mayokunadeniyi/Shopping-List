@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="click_to_add">Click to add a new item</string>
     <string name="new_item_dialog_title">Enter a new item</string>
+    <string name="qtyText">Quantity:</string>
+    <string name="date_added">Date added:</string>
 </resources>

@@ -21,6 +21,8 @@ class HomeFragmentViewModel (
     val hasContent: LiveData<Boolean>
     get() = _hasContent
 
+    val shoppingItems = database.getAllItems()
+
 
     override fun onCleared() {
         super.onCleared()
@@ -42,6 +44,8 @@ class HomeFragmentViewModel (
                 val oneItem = database.getOneItem()
                 if (oneItem != null){
                     _hasContent.postValue(true)
+                }else{
+                    _hasContent.postValue(false)
                 }
             }
         }

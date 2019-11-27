@@ -3,6 +3,7 @@ package com.mayokun.shoppinglist.ui.home
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,11 +15,15 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavAction
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.database.ShoppingItem
 import com.mayokun.shoppinglist.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentHomeBinding
-
+import com.mayokun.shoppinglist.ui.itemlist.ItemListFragment
+import timber.log.Timber
 
 
 /**
@@ -37,7 +42,6 @@ class HomeFragment : Fragment() {
             , container, false
         )
 
-
         val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
 
         val homeFragmentViewModelFactory = HomeFragmentViewModelFactory(dataSource)
@@ -48,7 +52,7 @@ class HomeFragment : Fragment() {
         //Observer to check if the database contains any items
         homeFragmentViewModel.hasContent.observe(this, Observer { state ->
             if (state){
-                //TODO: Show list of items
+                this.findNavController().navigate(R.id.action_homeFragment_to_itemListFragment)
             }
         })
 
@@ -80,6 +84,9 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * This is called when the user presses the save button on the custom dialog.
+     */
     private fun onSaveButtonPressed(view: View) {
         val name = view.findViewById<EditText>(R.id.itemNameID)?.text.toString()
         val quantity = view.findViewById<EditText>(R.id.itemQuantityID)?.text.toString().toInt()

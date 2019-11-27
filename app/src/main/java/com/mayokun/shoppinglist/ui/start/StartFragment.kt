@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist.ui.itemlist
+package com.mayokun.shoppinglist.ui.start
 
 
 import android.os.Bundle
@@ -6,44 +6,41 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.database.ShoppingItemDatabase
-import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
  */
-class ItemListFragment : Fragment() {
-    lateinit var binding: FragmentItemListBinding
+class StartFragment : Fragment() {
+
     private lateinit var homeFragmentViewModel: HomeFragmentViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
+        val dataSource = ShoppingItemDatabase.getInstance(requireContext()).shoppingItemDao
 
         val homeFragmentViewModelFactory = HomeFragmentViewModelFactory(dataSource)
 
         homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
             .get(HomeFragmentViewModel::class.java)
 
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_item_list,container,false
-        )
-        val adapter = ShoppingItemAdapter()
-        binding.shoppingListRecyclerview.adapter = adapter
-
-        homeFragmentViewModel.shoppingItems.observe(this, Observer {
-            adapter.data = it
+        homeFragmentViewModel.hasContent.observe(this, Observer {
+            val navController = this.findNavController()
+            if (it == true){
+                navController.navigate(R.id.action_startFragment_to_itemListFragment)
+            }else{
+                navController.navigate(R.id.action_startFragment_to_homeFragment)
+            }
         })
-
-        return binding.root
+        return null
     }
 
 
