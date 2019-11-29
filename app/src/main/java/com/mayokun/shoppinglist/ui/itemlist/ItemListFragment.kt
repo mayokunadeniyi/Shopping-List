@@ -39,7 +39,7 @@ class ItemListFragment : Fragment() {
         binding.shoppingListRecyclerview.adapter = adapter
 
         homeFragmentViewModel.shoppingItems.observe(this, Observer {
-            adapter.data = it
+            adapter.submitList(it)
         })
 
         return binding.root
