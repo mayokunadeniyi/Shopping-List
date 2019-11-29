@@ -1,9 +1,10 @@
-package com.mayokun.shoppinglist.database
+package com.mayokun.shoppinglist.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mayokun.shoppinglist.data.model.ShoppingItem
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-09.
