@@ -14,6 +14,7 @@ import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory
+import com.mayokun.shoppinglist.utils.Popup
 
 /**
  * A simple [Fragment] subclass.
@@ -41,6 +42,10 @@ class ItemListFragment : Fragment() {
         homeFragmentViewModel.shoppingItems.observe(this, Observer {
             adapter.submitList(it)
         })
+
+        binding.addAnotherItem.setOnClickListener {
+            Popup.createPopUp(layoutInflater,requireContext(),this)
+        }
 
         return binding.root
     }
