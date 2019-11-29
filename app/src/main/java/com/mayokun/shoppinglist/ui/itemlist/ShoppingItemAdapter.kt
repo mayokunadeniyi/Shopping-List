@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mayokun.shoppinglist.R
-import com.mayokun.shoppinglist.data.model.ShoppingItem
+import com.mayokun.shoppinglist.database.ShoppingItem
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-26.

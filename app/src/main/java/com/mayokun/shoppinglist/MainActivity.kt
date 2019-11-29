@@ -1,8 +1,7 @@
-package com.mayokun.shoppinglist.ui.start
+package com.mayokun.shoppinglist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mayokun.shoppinglist.R
 
 class MainActivity : AppCompatActivity() {
 

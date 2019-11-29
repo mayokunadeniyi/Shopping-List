@@ -3,7 +3,7 @@ package com.mayokun.shoppinglist.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mayokun.shoppinglist.data.database.ShoppingItemDao
+import com.mayokun.shoppinglist.database.ShoppingItemDao
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-15.

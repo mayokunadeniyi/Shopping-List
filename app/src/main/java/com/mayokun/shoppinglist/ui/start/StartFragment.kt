@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
-import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
+import com.mayokun.shoppinglist.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory
 

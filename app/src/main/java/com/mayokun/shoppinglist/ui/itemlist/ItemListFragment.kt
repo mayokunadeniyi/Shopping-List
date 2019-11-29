@@ -6,11 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mayokun.shoppinglist.R
-import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
+import com.mayokun.shoppinglist.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory

@@ -4,8 +4,8 @@ package com.mayokun.shoppinglist.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mayokun.shoppinglist.data.model.ShoppingItem
-import com.mayokun.shoppinglist.data.database.ShoppingItemDao
+import com.mayokun.shoppinglist.database.ShoppingItem
+import com.mayokun.shoppinglist.database.ShoppingItemDao
 import kotlinx.coroutines.*
 
 /**

@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist.data.model
+package com.mayokun.shoppinglist.database
 
 
 import androidx.room.ColumnInfo

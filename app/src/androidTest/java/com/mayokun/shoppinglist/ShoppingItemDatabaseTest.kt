@@ -1,11 +1,13 @@
 package com.mayokun.shoppinglist
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.mayokun.shoppinglist.data.model.ShoppingItem
-import com.mayokun.shoppinglist.data.database.ShoppingItemDao
-import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
+import com.mayokun.shoppinglist.database.ShoppingItem
+import com.mayokun.shoppinglist.database.ShoppingItemDao
+import com.mayokun.shoppinglist.database.ShoppingItemDatabase
 import org.junit.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -44,10 +46,7 @@ class ShoppingItemDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetItem(){
-      val item = ShoppingItem(
-          itemName = "Yam",
-          itemQuantity = 5
-      )
+      val item = ShoppingItem(itemName = "Yam",itemQuantity = 5)
         shoppingItemDao.insert(item)
         val newItem = shoppingItemDao.getOneItem()
         assertEquals(newItem?.itemQuantity,5)

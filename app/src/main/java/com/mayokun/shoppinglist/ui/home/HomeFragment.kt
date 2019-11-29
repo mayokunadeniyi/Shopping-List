@@ -3,6 +3,7 @@ package com.mayokun.shoppinglist.ui.home
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,14 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavAction
+import androidx.navigation.NavHost
 import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
-import com.mayokun.shoppinglist.data.model.ShoppingItem
-import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
+import com.mayokun.shoppinglist.database.ShoppingItem
+import com.mayokun.shoppinglist.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentHomeBinding
+import com.mayokun.shoppinglist.ui.itemlist.ItemListFragment
+import timber.log.Timber
 
 
 /**
@@ -85,10 +91,7 @@ class HomeFragment : Fragment() {
         val name = view.findViewById<EditText>(R.id.itemNameID)?.text.toString()
         val quantity = view.findViewById<EditText>(R.id.itemQuantityID)?.text.toString().toInt()
 
-        val item = ShoppingItem(
-            itemName = name,
-            itemQuantity = quantity
-        )
+        val item = ShoppingItem(itemName = name,itemQuantity = quantity)
 
         homeFragmentViewModel.onSaveButtonPressed(item)
 

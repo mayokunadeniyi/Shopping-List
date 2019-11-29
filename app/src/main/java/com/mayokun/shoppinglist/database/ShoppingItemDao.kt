@@ -1,8 +1,7 @@
-package com.mayokun.shoppinglist.data.database
+package com.mayokun.shoppinglist.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mayokun.shoppinglist.data.model.ShoppingItem
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-09.
