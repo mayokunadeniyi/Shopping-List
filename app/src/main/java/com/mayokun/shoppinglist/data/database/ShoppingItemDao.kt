@@ -32,4 +32,7 @@ interface ShoppingItemDao {
 
     @Query("SELECT * FROM shopping_list_table ORDER BY itemId DESC")
     fun getRawList() :List<ShoppingItem>
+
+    @Query("SELECT * FROM shopping_list_table WHERE itemId=:id ")
+    fun getItemById(id: Long) : ShoppingItem
 }

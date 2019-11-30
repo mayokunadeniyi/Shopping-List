@@ -52,5 +52,17 @@ class ShoppingItemDatabaseTest {
         val newItem = shoppingItemDao.getOneItem()
         assertEquals(newItem?.itemQuantity,5)
     }
+
+    @Test
+    fun deleteItem(){
+        val item = ShoppingItem(
+            itemName = "Rice",
+            itemQuantity = 6
+        )
+        val itemId = item.itemId
+        shoppingItemDao.insert(item)
+        shoppingItemDao.deleteItem(item)
+        assertEquals(shoppingItemDao.getItemById(itemId),null)
+    }
 }
 

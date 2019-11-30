@@ -15,7 +15,7 @@ import com.mayokun.shoppinglist.utils.getCurrentSystemTime
 data class ShoppingItem(
 
     @PrimaryKey(autoGenerate = true)
-    var itemId: Int = 0,
+    var itemId: Long = 0L,
 
     @ColumnInfo(name = "item_name")
     var itemName: String,
