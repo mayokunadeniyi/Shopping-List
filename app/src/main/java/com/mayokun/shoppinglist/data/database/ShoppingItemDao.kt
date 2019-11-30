@@ -29,4 +29,7 @@ interface ShoppingItemDao {
 
     @Query("SELECT * FROM shopping_list_table ORDER BY itemId DESC LIMIT 1")
     fun getOneItem(): ShoppingItem?
+
+    @Query("SELECT * FROM shopping_list_table ORDER BY itemId DESC")
+    fun getRawList() :List<ShoppingItem>
 }
