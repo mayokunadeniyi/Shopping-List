@@ -36,7 +36,8 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    tools:text="Yam" />
+                    tools:text="Yam"
+                    app:setItemName="@{item}"/>
 
                 <LinearLayout
                     android:id="@+id/firstLinear"
@@ -62,7 +63,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/item_name"
                         android:textStyle="italic"
-                        tools:text="50" />
+                        tools:text="50"
+                        android:padding="5dp"
+                        android:layout_marginEnd="5dp"
+                        app:setItemQuantity="@{item}"/>
 
                 </LinearLayout>
 
@@ -79,7 +83,7 @@
                         android:text="@string/date_added"
                         android:layout_width="wrap_content"
                         android:textStyle="italic"
-                        android:layout_marginRight="3dp"
+                        android:layout_marginEnd="3dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -87,30 +91,35 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/item_date_added"
                         tools:text="26th November, 2019"
-                        android:textStyle="italic" />
+                        android:layout_marginEnd="5dp"
+                        android:textStyle="italic"
+                        android:padding="5dp"
+                        app:setDateCreated="@{item}"/>
                 </LinearLayout>
 
 
                 <TableRow
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_alignBottom="@id/secondLinear"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_below="@id/secondLinear"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/editBtn"
-                        android:layout_height="30dp"
                         android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginRight="15dp"
-                        android:background="@android:drawable/ic_menu_edit" />
+                        android:background="@android:drawable/ic_menu_edit"
+                        android:focusable="true" />
 
                     <Button
                         android:id="@+id/deleteBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@android:drawable/ic_delete" />
+                        android:background="@android:drawable/ic_delete"
+                        android:focusable="true" />
 
                 </TableRow>
 
