@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist.ui.start
+package com.mayokun.shoppinglist.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
