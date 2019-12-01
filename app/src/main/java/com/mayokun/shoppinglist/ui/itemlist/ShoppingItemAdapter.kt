@@ -3,8 +3,6 @@ package com.mayokun.shoppinglist.ui.itemlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,16 +10,14 @@ import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.data.model.ShoppingItem
 import com.mayokun.shoppinglist.databinding.ItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
-import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory
 import kotlinx.coroutines.*
-import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-26.
  */
 
-class ShoppingItemAdapter: ListAdapter<ShoppingItem,ShoppingItemAdapter.ViewHolder>(ShoppingListDiffUtils()){
+class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
+    ListAdapter<ShoppingItem,ShoppingItemAdapter.ViewHolder>(ShoppingListDiffUtils()){
     /**
      * Creates and returns ViewHolder on request from the RecyclerView
      */
@@ -34,27 +30,41 @@ class ShoppingItemAdapter: ListAdapter<ShoppingItem,ShoppingItemAdapter.ViewHold
      *data to the ViewHolder
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        holder.bind(getItem(position),clickListener)
     }
 
-    class ViewHolder private constructor(private val binding: ItemListBinding):
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener{
-
-        private val job = Job()
-        private val uiScope = CoroutineScope(Dispatchers.Main + job)
+    class ViewHolder private constructor(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root){
 
         /**
          * This function takes in a shopping item and uses DataBinding to attach each view in the item_list.xml layout to data
          * from the shopping item.
          */
-        fun bind(item: ShoppingItem){
+        fun bind(item: ShoppingItem, clickListener: ShoppingItemListener){
             binding.item = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
-            //TODO: Try removing the extension of onclick listener and just call button.setOnClickListener
-            binding.deleteBtn.setOnClickListener(this)
-            binding.editBtn.setOnClickListener(this)
+            binding.deleteBtn.setOnClickListener { view ->
+                deleteItem(view, item)
+            }
 
+        }
+
+        /**
+         * This function is called when the delete button is pressed.
+         * It takes in a View and the corresponding Item in that View, gets a reference to the
+         * ViewModel and deletes the item on a Coroutine.
+         */
+        private fun deleteItem(view: View, item: ShoppingItem) {
+            val uiScope = CoroutineScope(Dispatchers.Main + Job())
+            val dataSource = ShoppingItemDatabase.getInstance(view.context).shoppingItemDao
+            val viewModel = HomeFragmentViewModel(dataSource)
+            item.let {
+                uiScope.launch {
+                    withContext(Dispatchers.Default) {
+                        viewModel.onDeleteButtonPressed(item)
+                    }
+                }
+            }
         }
 
         companion object{
@@ -62,26 +72,6 @@ class ShoppingItemAdapter: ListAdapter<ShoppingItem,ShoppingItemAdapter.ViewHold
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemListBinding.inflate(layoutInflater,parent,false)
                 return ViewHolder(binding)
-            }
-        }
-
-        override fun onClick(v: View) {
-            binding.deleteBtn.setOnClickListener {
-                uiScope.launch {
-                     withContext(Dispatchers.IO){
-                    val dataSource = ShoppingItemDatabase.getInstance(v.context).shoppingItemDao
-                    val viewModel = HomeFragmentViewModel(dataSource)
-                    val list = dataSource.getRawList()
-                    val item = list[adapterPosition]
-                    viewModel.onDeleteButtonPressed(item)
-                         Toast.makeText(v.context,"Item deleted",Toast.LENGTH_SHORT).show()
-                     }
-                }
-
-            }
-
-            binding.editBtn.setOnClickListener {
-                //TODO: Update the item
             }
         }
 
@@ -97,4 +87,8 @@ class ShoppingListDiffUtils: DiffUtil.ItemCallback<ShoppingItem>(){
         return oldItem == newItem
     }
 
+}
+
+class ShoppingItemListener(val clickListener: (itemId: Long) -> Unit){
+    fun onClick(item: ShoppingItem) = clickListener(item.itemId)
 }

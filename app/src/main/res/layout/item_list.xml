@@ -7,6 +7,9 @@
         <variable
             name="item"
             type="com.mayokun.shoppinglist.data.model.ShoppingItem" />
+        <variable
+            name="clickListener"
+            type="com.mayokun.shoppinglist.ui.itemlist.ShoppingItemListener" />
     </data>
 
     <LinearLayout
@@ -28,7 +31,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:onClick="@{() -> clickListener.onClick(item)}">
 
                 <TextView
                     android:id="@+id/item_name"
