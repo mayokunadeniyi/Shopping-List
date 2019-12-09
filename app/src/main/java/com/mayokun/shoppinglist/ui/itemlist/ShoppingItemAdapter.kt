@@ -1,16 +1,20 @@
 package com.mayokun.shoppinglist.ui.itemlist
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.data.model.ShoppingItem
+import com.mayokun.shoppinglist.databinding.CreateNewItemBinding
 import com.mayokun.shoppinglist.databinding.ItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
-import kotlinx.coroutines.*
+import timber.log.Timber
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-26.
@@ -33,7 +37,10 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
         holder.bind(getItem(position),clickListener)
     }
 
-    class ViewHolder private constructor(private val binding: ItemListBinding): RecyclerView.ViewHolder(binding.root){
+    class ViewHolder private constructor(private val binding: ItemListBinding):
+        RecyclerView.ViewHolder(binding.root){
+        val dataSource = ShoppingItemDatabase.getInstance(itemView.context).shoppingItemDao
+        val viewModel = ItemListViewModel(dataSource)
 
         /**
          * This function takes in a shopping item and uses DataBinding to attach each view in the item_list.xml layout to data
@@ -43,10 +50,40 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
             binding.item = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
-            binding.deleteBtn.setOnClickListener { view ->
-                deleteItem(view, item)
+            binding.deleteBtn.setOnClickListener {
+                deleteItem(item)
             }
 
+            binding.editBtn.setOnClickListener { view ->
+                editItem(view,item)
+            }
+
+        }
+
+        private fun editItem(view: View, item: ShoppingItem) {
+            Toast.makeText(view.context,"Yoooo!",Toast.LENGTH_LONG).show()
+            val builder = AlertDialog.Builder(view.context)
+            val layoutInflater = LayoutInflater.from(view.context)
+            val alertDialog: AlertDialog
+            val fooView = layoutInflater.inflate(R.layout.create_new_item,null)
+            val newItemBinding = CreateNewItemBinding.bind(fooView)
+            newItemBinding.itemNameID.setText(item.itemName)
+            newItemBinding.itemQuantityID.setText(item.itemQuantity.toString())
+            builder.setView(fooView)
+            alertDialog = builder.create()
+            alertDialog.show()
+
+            newItemBinding.saveItemButton.setOnClickListener {
+                val name = newItemBinding.itemNameID.text.toString()
+                val quantity = newItemBinding.itemQuantityID.text.toString().toInt()
+                Toast.makeText(it.context,"Name is $name and $quantity",Toast.LENGTH_LONG).show()
+
+                item.itemName = name
+                item.itemQuantity = quantity
+
+                viewModel.onEditButtonClicked(item)
+                alertDialog.dismiss()
+            }
         }
 
         /**
@@ -54,16 +91,9 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
          * It takes in a View and the corresponding Item in that View, gets a reference to the
          * ViewModel and deletes the item on a Coroutine.
          */
-        private fun deleteItem(view: View, item: ShoppingItem) {
-            val uiScope = CoroutineScope(Dispatchers.Main + Job())
-            val dataSource = ShoppingItemDatabase.getInstance(view.context).shoppingItemDao
-            val viewModel = HomeFragmentViewModel(dataSource)
+        private fun deleteItem(item: ShoppingItem) {
             item.let {
-                uiScope.launch {
-                    withContext(Dispatchers.Default) {
-                        viewModel.onDeleteButtonPressed(item)
-                    }
-                }
+               viewModel.onDeleteButtonPressed(item)
             }
         }
 

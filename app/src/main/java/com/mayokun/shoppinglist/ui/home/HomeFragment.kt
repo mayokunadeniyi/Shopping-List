@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentHomeBinding
+import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.utils.Popup
 
 
@@ -20,23 +21,20 @@ import com.mayokun.shoppinglist.utils.Popup
  * A simple [Fragment] subclass.
  */
 class HomeFragment : Fragment() {
-
-    private lateinit var homeFragmentViewModel: HomeFragmentViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_home
-            , container, false
-        )
 
+        //Layout binding
+        val binding = FragmentHomeBinding.inflate(layoutInflater)
+
+        //Shopping Item DAO
         val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
 
         val homeFragmentViewModelFactory = HomeFragmentViewModelFactory(dataSource)
 
-        homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
+        val homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
             .get(HomeFragmentViewModel::class.java)
 
         //Observer to check if the database contains any items
@@ -48,6 +46,7 @@ class HomeFragment : Fragment() {
 
         binding.homeFragmentViewModel = homeFragmentViewModel
         binding.lifecycleOwner = this
+
 
         //Onclick listener for the FAB
         binding.newItemButton.setOnClickListener {

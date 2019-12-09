@@ -41,7 +41,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     tools:text="Yam"
-                    app:setItemName="@{item}"/>
+                    app:itemName="@{item}"/>
 
                 <LinearLayout
                     android:id="@+id/firstLinear"
@@ -70,7 +70,7 @@
                         tools:text="50"
                         android:padding="5dp"
                         android:layout_marginEnd="5dp"
-                        app:setItemQuantity="@{item}"/>
+                        app:itemQuantity="@{item}"/>
 
                 </LinearLayout>
 
@@ -98,7 +98,7 @@
                         android:layout_marginEnd="5dp"
                         android:textStyle="italic"
                         android:padding="5dp"
-                        app:setDateCreated="@{item}"/>
+                        app:dateCreated="@{item}"/>
                 </LinearLayout>
 
 

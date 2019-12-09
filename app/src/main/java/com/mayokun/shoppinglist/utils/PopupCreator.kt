@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -26,7 +27,7 @@ class Popup {
         * This shows the custom dialog for adding a new item
         */
        @SuppressLint("InflateParams")
-       fun createPopUp(layoutInflater: LayoutInflater,context: Context,fragment: Fragment) {
+       fun createPopUp(layoutInflater: LayoutInflater,context: Context,fragment: Fragment): View {
            val builder = AlertDialog.Builder(context)
            val alertDialog: AlertDialog
            val view = layoutInflater.inflate(R.layout.create_new_item,null)
@@ -55,6 +56,8 @@ class Popup {
                homeFragmentViewModel.onSaveButtonPressed(item)
                alertDialog.dismiss()
            }
+
+           return view
        }
 
    }

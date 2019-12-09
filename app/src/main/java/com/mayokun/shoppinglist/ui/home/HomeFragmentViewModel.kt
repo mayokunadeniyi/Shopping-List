@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.mayokun.shoppinglist.data.model.ShoppingItem
 import com.mayokun.shoppinglist.data.database.ShoppingItemDao
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 /**
  * Created by Mayokun Adeniyi on 2019-11-15.
@@ -20,8 +21,6 @@ class HomeFragmentViewModel (
     private var _hasContent = MutableLiveData<Boolean>()
     val hasContent: LiveData<Boolean>
     get() = _hasContent
-
-    val shoppingItems = database.getAllItems()
 
 
     override fun onCleared() {
@@ -51,7 +50,6 @@ class HomeFragmentViewModel (
         }
     }
 
-
     fun onSaveButtonPressed(item: ShoppingItem){
         uiScope.launch {
             insert(item)
@@ -64,32 +62,4 @@ class HomeFragmentViewModel (
             _hasContent.postValue(true)
         }
     }
-
-    fun onEditButtonClicked(item: ShoppingItem){
-        uiScope.launch {
-            update(item)
-        }
-    }
-
-    private suspend fun update(item: ShoppingItem){
-        withContext(Dispatchers.IO){
-            database.update(item)
-        }
-    }
-
-    fun onDeleteButtonPressed(item: ShoppingItem){
-        uiScope.launch {
-            delete(item)
-        }
-    }
-
-    private suspend fun delete(item: ShoppingItem){
-        withContext(Dispatchers.IO){
-            database.deleteItem(item)
-        }
-    }
-
-
-
-
 }
