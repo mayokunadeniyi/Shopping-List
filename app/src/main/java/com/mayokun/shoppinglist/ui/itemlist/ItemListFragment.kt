@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
@@ -33,10 +34,12 @@ class ItemListFragment : Fragment() {
 
         val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
 
-        val viewModel by viewModels<ItemListViewModel> { ItemListViewModelFactory(dataSource) }
+       // val viewModel by viewModels<ItemListViewModel> { ItemListViewModelFactory(dataSource) }
+        val itemListViewModelFactory = ItemListViewModelFactory(dataSource)
+        val viewModel = ViewModelProviders.of(this,itemListViewModelFactory)
+            .get(ItemListViewModel::class.java)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+
 
         val adapter = ShoppingItemAdapter(ShoppingItemListener {
             Toast.makeText(context,"Id is $it",Toast.LENGTH_SHORT).show()
@@ -48,8 +51,15 @@ class ItemListFragment : Fragment() {
             adapter.submitList(it)
         })
 
+        viewModel.hasContent.observe(this, Observer {value ->
+            if (!value){
+                this.findNavController().navigate(R.id.action_itemListFragment_to_homeFragment)
+            }
+        })
+
         viewModel.refresh.observe(this, Observer { state ->
-            if (state == true){
+            if (state){
+                Timber.i("The state is $state")
                 adapter.notifyDataSetChanged()
                 viewModel.onRefreshFinished()
             }
@@ -58,6 +68,9 @@ class ItemListFragment : Fragment() {
         binding.addAnotherItem.setOnClickListener {
             Popup.createPopUp(layoutInflater,requireContext(),this)
         }
+
+        binding.itemListViewModel = viewModel
+        binding.lifecycleOwner = this
 
         return binding.root
     }

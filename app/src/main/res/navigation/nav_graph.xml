@@ -18,7 +18,11 @@
         android:id="@+id/itemListFragment"
         android:name="com.mayokun.shoppinglist.ui.itemlist.ItemListFragment"
         android:label="ItemListFragment"
-        tools:layout="@layout/fragment_item_list"/>
+        tools:layout="@layout/fragment_item_list">
+        <action
+            android:id="@+id/action_itemListFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/startFragment"
         android:name="com.mayokun.shoppinglist.ui.start.StartFragment"

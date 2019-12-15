@@ -8,6 +8,7 @@ import com.mayokun.shoppinglist.data.database.ShoppingItemDao
  * Created by Mayokun Adeniyi on 09/12/2019.
  */
 
+@Suppress("UNCHECKED_CAST")
 class ItemListViewModelFactory(
     private val dataSource: ShoppingItemDao) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -18,7 +18,7 @@ interface ShoppingItemDao {
     @Insert
     fun insert(shoppingItem: ShoppingItem)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(shoppingItem: ShoppingItem)
 
     @Delete
