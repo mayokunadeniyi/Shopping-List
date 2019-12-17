@@ -10,6 +10,9 @@
         <variable
             name="clickListener"
             type="com.mayokun.shoppinglist.ui.itemlist.ShoppingItemListener" />
+        <variable
+            name="viewModel"
+            type="com.mayokun.shoppinglist.ui.itemlist.ItemListViewModel" />
     </data>
 
     <LinearLayout
@@ -105,8 +108,7 @@
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/secondLinear"
                     android:orientation="horizontal">
 

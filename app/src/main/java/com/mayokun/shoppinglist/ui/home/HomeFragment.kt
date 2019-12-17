@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -32,12 +33,14 @@ class HomeFragment : Fragment() {
         //Shopping Item DAO
         val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
 
-        val homeFragmentViewModelFactory = HomeFragmentViewModelFactory(dataSource)
+        //ViewModel
+        val homeFragmentViewModel by viewModels<HomeFragmentViewModel> { HomeFragmentViewModelFactory(dataSource) }
 
-        val homeFragmentViewModel = ViewModelProviders.of(this,homeFragmentViewModelFactory)
-            .get(HomeFragmentViewModel::class.java)
-
-        //Observer to check if the database contains any items
+        /**
+         * This observer checks if the database has any content.
+         * If there is content in the database, it triggers a navigation
+         * from the HomeFragment to the ItemListFragment
+         */
         homeFragmentViewModel.hasContent.observe(this, Observer { state ->
             if (state){
                 this.findNavController().navigate(R.id.action_homeFragment_to_itemListFragment)
@@ -47,12 +50,14 @@ class HomeFragment : Fragment() {
         binding.homeFragmentViewModel = homeFragmentViewModel
         binding.lifecycleOwner = this
 
-
-        //Onclick listener for the FAB
+        /**
+         *  Onclick listener for the FAB to add a new item.
+         *  This creates a pop dialog
+         *  @see [Popup]
+         */
         binding.newItemButton.setOnClickListener {
             Popup.createPopUp(layoutInflater,requireContext(),this)
         }
-
         return binding.root
     }
 

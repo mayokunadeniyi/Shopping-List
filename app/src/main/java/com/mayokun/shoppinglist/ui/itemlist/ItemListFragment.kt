@@ -2,6 +2,7 @@ package com.mayokun.shoppinglist.ui.itemlist
 
 
 import android.os.Bundle
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
-import com.mayokun.shoppinglist.ui.home.HomeFragment
-import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
-import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModelFactory
+import com.mayokun.shoppinglist.databinding.ItemListBinding
 import com.mayokun.shoppinglist.utils.Popup
 import timber.log.Timber
 
@@ -34,11 +33,12 @@ class ItemListFragment : Fragment() {
 
         val dataSource = ShoppingItemDatabase.getInstance(this.requireContext()).shoppingItemDao
 
-       // val viewModel by viewModels<ItemListViewModel> { ItemListViewModelFactory(dataSource) }
-        val itemListViewModelFactory = ItemListViewModelFactory(dataSource)
-        val viewModel = ViewModelProviders.of(this,itemListViewModelFactory)
-            .get(ItemListViewModel::class.java)
+        val application = requireNotNull(this.activity).application
 
+        val itemListViewModel by viewModels<ItemListViewModel> { ItemListViewModelFactory(dataSource,application) }
+
+
+        binding.itemListViewModel = itemListViewModel
 
 
         val adapter = ShoppingItemAdapter(ShoppingItemListener {
@@ -47,30 +47,17 @@ class ItemListFragment : Fragment() {
 
         binding.shoppingListRecyclerview.adapter = adapter
 
-        viewModel.shoppingItems.observe(this, Observer {
+        itemListViewModel.shoppingItems.observe(this, Observer {
             adapter.submitList(it)
         })
 
-        viewModel.hasContent.observe(this, Observer {value ->
-            if (!value){
-                this.findNavController().navigate(R.id.action_itemListFragment_to_homeFragment)
-            }
-        })
+        binding.lifecycleOwner = this.viewLifecycleOwner
 
-        viewModel.refresh.observe(this, Observer { state ->
-            if (state){
-                Timber.i("The state is $state")
-                adapter.notifyDataSetChanged()
-                viewModel.onRefreshFinished()
-            }
-        })
 
         binding.addAnotherItem.setOnClickListener {
             Popup.createPopUp(layoutInflater,requireContext(),this)
         }
 
-        binding.itemListViewModel = viewModel
-        binding.lifecycleOwner = this
 
         return binding.root
     }

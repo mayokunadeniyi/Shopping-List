@@ -16,7 +16,11 @@ import timber.log.Timber
 class HomeFragmentViewModel (
     val database: ShoppingItemDao): ViewModel(){
 
+    //Coroutine Job
     private var viewModelJob = Job()
+
+    //Coroutine scope
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private var _hasContent = MutableLiveData<Boolean>()
     val hasContent: LiveData<Boolean>
@@ -28,14 +32,14 @@ class HomeFragmentViewModel (
         viewModelJob.cancel()
     }
 
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         checkDataBase()
     }
 
     /**
-     * This checks if there are any items already stored in the database
+     * This checks if there are any items already stored in the database.
+     * The value of the mutable live data [_hasContent] is updated based on
+     * if there is an item in the database or not.
      */
     private fun checkDataBase(){
         uiScope.launch {
@@ -50,12 +54,22 @@ class HomeFragmentViewModel (
         }
     }
 
+    /**
+     * This is triggered when the save button on the popup dialog is pressed.
+     * Takes in a new item and sends it to the [insert] function to be saved in
+     * the database on a coroutine.
+     * @param item the item to be sent to the [insert] function
+     */
     fun onSaveButtonPressed(item: ShoppingItem){
         uiScope.launch {
             insert(item)
         }
     }
 
+    /**
+     * This is a coroutine-friendly function that inserts a new item into the database.
+     * @param item the item to be inserted into the database
+     */
     private suspend fun insert(item: ShoppingItem){
         withContext(Dispatchers.IO){
             database.insert(item)

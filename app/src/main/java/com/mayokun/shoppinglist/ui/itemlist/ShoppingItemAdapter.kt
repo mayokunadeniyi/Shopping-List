@@ -1,6 +1,7 @@
 package com.mayokun.shoppinglist.ui.itemlist
 
 import android.app.AlertDialog
+import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.mayokun.shoppinglist.data.model.ShoppingItem
 import com.mayokun.shoppinglist.databinding.CreateNewItemBinding
 import com.mayokun.shoppinglist.databinding.ItemListBinding
 import com.mayokun.shoppinglist.ui.home.HomeFragmentViewModel
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 /**
@@ -40,7 +42,7 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
     class ViewHolder private constructor(private val binding: ItemListBinding):
         RecyclerView.ViewHolder(binding.root){
         val dataSource = ShoppingItemDatabase.getInstance(itemView.context).shoppingItemDao
-        val viewModel = ItemListViewModel(dataSource)
+        val viewModel = ItemListViewModel(dataSource, Application())
 
         /**
          * This function takes in a shopping item and uses DataBinding to attach each view in the item_list.xml layout to data
@@ -53,12 +55,11 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
             binding.deleteBtn.setOnClickListener {
                 deleteItem(item)
             }
-
-            binding.editBtn.setOnClickListener { view ->
+            binding.editBtn.setOnClickListener {view ->
                 editItem(view,item)
             }
-
         }
+
 
         private fun editItem(view: View, item: ShoppingItem) {
             Toast.makeText(view.context,"Yoooo!",Toast.LENGTH_LONG).show()
@@ -82,10 +83,10 @@ class ShoppingItemAdapter(val clickListener: ShoppingItemListener):
                 item.itemQuantity = quantity
 
                 viewModel.onEditButtonClicked(item)
+                binding.item = item
                 alertDialog.dismiss()
             }
         }
-
         /**
          * This function is called when the delete button is pressed.
          * It takes in a View and the corresponding Item in that View, gets a reference to the

@@ -42,6 +42,4 @@ class StartFragment : Fragment() {
         })
         return null
     }
-
-
 }
