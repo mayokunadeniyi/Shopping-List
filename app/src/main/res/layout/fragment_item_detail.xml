@@ -4,7 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.mayokun.shoppinglist.detail.ItemDetailFragmentViewModel" />
+        <variable
+            name="item"
+            type="com.mayokun.shoppinglist.data.model.ShoppingItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             tools:text="Yam"
+            itemName="@{item}"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
@@ -72,6 +78,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             tools:text="4.92"
+            itemQuantity="@{item}"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -89,6 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            dateCreated="@{item}"
             android:layout_marginTop="16dp"
             tools:text="9th February 2019"
             app:layout_constraintStart_toEndOf="@+id/textView9"
