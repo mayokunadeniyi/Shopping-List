@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.utils.Popup
@@ -34,8 +35,9 @@ class ItemListFragment : Fragment() {
         binding.itemListViewModel = itemListViewModel
 
 
-        val adapter = ShoppingItemAdapter(ShoppingItemListener {
-            Toast.makeText(context,"Id is $it",Toast.LENGTH_SHORT).show()
+        val adapter = ShoppingItemAdapter(ShoppingItemListener { itemId ->
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(itemId)
+            this.findNavController().navigate(action)
         })
 
         binding.shoppingListRecyclerview.adapter = adapter
