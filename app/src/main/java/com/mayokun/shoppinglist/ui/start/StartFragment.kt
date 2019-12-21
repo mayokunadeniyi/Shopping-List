@@ -33,12 +33,14 @@ class StartFragment : Fragment() {
             .get(HomeFragmentViewModel::class.java)
 
         homeFragmentViewModel.hasContent.observe(this, Observer {
-            val navController = this.findNavController()
+            val navController = findNavController()
             if (it == true){
                 navController.navigate(R.id.action_startFragment_to_itemListFragment)
+
             }else{
                 navController.navigate(R.id.action_startFragment_to_homeFragment)
             }
+
         })
         return null
     }

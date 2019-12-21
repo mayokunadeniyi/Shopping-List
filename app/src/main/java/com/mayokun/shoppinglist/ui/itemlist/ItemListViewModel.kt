@@ -1,16 +1,12 @@
 package com.mayokun.shoppinglist.ui.itemlist
 
 import android.app.Application
-import android.widget.Button
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.mayokun.shoppinglist.data.database.ShoppingItemDao
 import com.mayokun.shoppinglist.data.model.ShoppingItem
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 /**
  * Created by Mayokun Adeniyi on 09/12/2019.
@@ -31,8 +27,12 @@ class ItemListViewModel(
 
     val shoppingItems = database.getAllItems()
 
-
-
+    /**
+     * This is triggered when the edit button is pressed and then the save button on the popup dialog is pressed.
+     * Takes in an edited item and sends it to the [update] function to be updated in
+     * the database on a coroutine.
+     * @param item the edited item to be sent to the [update] function
+     */
     fun onEditButtonClicked(item: ShoppingItem){
         uiScope.launch {
             update(item)
@@ -45,6 +45,7 @@ class ItemListViewModel(
             database.update(item)
         }
     }
+
 
 
     fun onDeleteButtonPressed(item: ShoppingItem){
