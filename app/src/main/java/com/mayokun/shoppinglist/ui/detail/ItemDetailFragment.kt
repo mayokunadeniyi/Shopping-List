@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist.detail
+package com.mayokun.shoppinglist.ui.detail
 
 
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.mayokun.shoppinglist.R
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemDetailBinding
 
@@ -30,7 +29,10 @@ class ItemDetailFragment : Fragment() {
         val itemDetailFragmentArgs by navArgs<ItemDetailFragmentArgs>()
 
         val viewModel by viewModels<ItemDetailFragmentViewModel> {
-            ItemDetailFragmentViewModelFactory(dataSource,itemDetailFragmentArgs.itemId)
+            ItemDetailFragmentViewModelFactory(
+                dataSource,
+                itemDetailFragmentArgs.itemId
+            )
         }
 
         binding.viewModel = viewModel

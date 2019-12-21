@@ -1,4 +1,4 @@
-package com.mayokun.shoppinglist.detail
+package com.mayokun.shoppinglist.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.mayokun.shoppinglist.detail.ItemDetailFragmentViewModel" />
+            type="com.mayokun.shoppinglist.ui.detail.ItemDetailFragmentViewModel" />
         <variable
             name="item"
             type="com.mayokun.shoppinglist.data.model.ShoppingItem" />

@@ -1,9 +1,8 @@
-package com.mayokun.shoppinglist.detail
+package com.mayokun.shoppinglist.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mayokun.shoppinglist.data.database.ShoppingItemDao
-import com.mayokun.shoppinglist.ui.detail.ItemDetailFragmentViewModel
 import java.lang.IllegalArgumentException
 
 /**
