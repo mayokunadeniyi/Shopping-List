@@ -7,4 +7,5 @@
     <string name="new_item_dialog_title">Enter a new item</string>
     <string name="qtyText">Quantity:</string>
     <string name="date_added">Date added:</string>
+    <string name="item_name">Item Name:</string>
 </resources>
