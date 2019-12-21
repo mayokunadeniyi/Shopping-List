@@ -19,13 +19,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    override fun onBackPressed() {
-
-        when(supportFragmentManager.fragments[0].javaClass.simpleName){
-          "ItemListFragment" -> this.finish()
-            "HomeFragment" -> this.finish()
-
-            else -> supportFragmentManager.popBackStack()
-        }
-    }
+//    override fun onBackPressed() {
+//
+//        when(supportFragmentManager.fragments[0].javaClass.simpleName){
+//          "ItemListFragment" -> this.finish()
+//            "HomeFragment" -> this.finish()
+//
+//            else -> supportFragmentManager.popBackStack()
+//        }
+//    }
 }
