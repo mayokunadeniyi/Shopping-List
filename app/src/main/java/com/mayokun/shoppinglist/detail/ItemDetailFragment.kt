@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.mayokun.shoppinglist.R
+import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemDetailBinding
 
 /**
@@ -22,6 +25,20 @@ class ItemDetailFragment : Fragment() {
 
         val binding = FragmentItemDetailBinding.inflate(layoutInflater)
 
+        val dataSource = ShoppingItemDatabase.getInstance(requireContext()).shoppingItemDao
+
+        val itemDetailFragmentArgs by navArgs<ItemDetailFragmentArgs>()
+
+        val viewModel by viewModels<ItemDetailFragmentViewModel> {
+            ItemDetailFragmentViewModelFactory(dataSource,itemDetailFragmentArgs.itemId)
+        }
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        viewModel.item.observe(viewLifecycleOwner, Observer {
+            binding.item = it
+        })
 
         return binding.root
     }
