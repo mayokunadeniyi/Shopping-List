@@ -4,6 +4,9 @@
 ## Introduction
 An Android application that integrates the [Android Jetpack](https://developer.android.com/jetpack/) components to help keep track of items needed when shopping.
 
+<p align="center"><a><img src="https://github.com/mayokunthefirst/Shopping-List/blob/master/gif/gifdemo.gif" width="300"></a></p>
+
+
 ## Architecture
 The architecture of this application relies and complies with the following points below:
 * A single-activity architecture, using the [Navigation Components](https://developer.android.com/guide/navigation) to manage fragment operations.
