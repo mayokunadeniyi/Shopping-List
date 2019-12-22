@@ -33,6 +33,11 @@ class ItemDetailFragmentViewModel(
         getItem()
     }
 
+    /**
+     * This gets the item whose details are to be displayed in the Details Fragment.
+     * It gets the item from the [dataSource] using the item's [itemId] on a background
+     * thread.
+     */
     private fun getItem() {
         uiScope.launch {
             withContext(Dispatchers.IO){

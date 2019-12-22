@@ -23,7 +23,7 @@
             android:id="@+id/action_itemListFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@+id/startFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_itemListFragment_to_itemDetailFragment"

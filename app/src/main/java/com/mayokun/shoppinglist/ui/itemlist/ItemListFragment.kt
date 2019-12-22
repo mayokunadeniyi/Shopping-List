@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.utils.Popup
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -33,6 +33,7 @@ class ItemListFragment : Fragment() {
 
 
         binding.itemListViewModel = itemListViewModel
+        binding.lifecycleOwner = this
 
 
         val adapter = ShoppingItemAdapter(ShoppingItemListener { itemId ->
@@ -44,9 +45,11 @@ class ItemListFragment : Fragment() {
 
         itemListViewModel.shoppingItems.observe(this, Observer {
             adapter.submitList(it)
+            if (it.isNullOrEmpty()){
+                val action = ItemListFragmentDirections.actionItemListFragmentToHomeFragment()
+                this.findNavController().navigate(action)
+            }
         })
-
-        binding.lifecycleOwner = this.viewLifecycleOwner
 
 
         binding.addAnotherItem.setOnClickListener {

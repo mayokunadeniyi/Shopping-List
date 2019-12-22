@@ -54,6 +54,10 @@ class HomeFragmentViewModel (
         }
     }
 
+    fun doneNavigating(){
+        _hasContent.value = false
+    }
+
     /**
      * This is triggered when the save button on the popup dialog is pressed.
      * Takes in a new item and sends it to the [insert] function to be saved in

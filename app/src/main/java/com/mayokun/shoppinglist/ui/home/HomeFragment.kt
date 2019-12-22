@@ -17,6 +17,7 @@ import com.mayokun.shoppinglist.data.database.ShoppingItemDatabase
 import com.mayokun.shoppinglist.databinding.FragmentHomeBinding
 import com.mayokun.shoppinglist.databinding.FragmentItemListBinding
 import com.mayokun.shoppinglist.utils.Popup
+import timber.log.Timber
 
 
 /**
@@ -45,8 +46,11 @@ class HomeFragment : Fragment() {
         homeFragmentViewModel.hasContent.observe(this, Observer { state ->
             if (state){
                 this.findNavController().navigate(R.id.action_homeFragment_to_itemListFragment)
+                homeFragmentViewModel.doneNavigating()
             }
         })
+
+        Timber.i("Third Question Observers? ${homeFragmentViewModel.hasContent.hasActiveObservers()} ")
 
         binding.homeFragmentViewModel = homeFragmentViewModel
         binding.lifecycleOwner = this

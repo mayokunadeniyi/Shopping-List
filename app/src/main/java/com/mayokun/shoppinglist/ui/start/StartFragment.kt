@@ -35,13 +35,14 @@ class StartFragment : Fragment() {
         homeFragmentViewModel.hasContent.observe(this, Observer {
             val navController = this.findNavController()
             if (it == true){
+                //Start the ItemList Fragment if the database has any content
               val action = StartFragmentDirections.actionStartFragmentToItemListFragment()
                 navController.navigate(action)
             }else{
+                //Start the Home Fragment if the database has no content
                 val action = StartFragmentDirections.actionStartFragmentToHomeFragment()
                 navController.navigate(action)
             }
-
         })
         return null
     }
