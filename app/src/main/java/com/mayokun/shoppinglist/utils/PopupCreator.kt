@@ -3,6 +3,7 @@ package com.mayokun.shoppinglist.utils
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -44,14 +45,29 @@ class Popup {
                    .get(HomeFragmentViewModel::class.java)
 
                val name = view.findViewById<EditText>(R.id.itemNameID)?.text.toString()
-               val quantity = view.findViewById<EditText>(R.id.itemQuantityID)?.text.toString().toInt()
+               val quantity = view.findViewById<EditText>(R.id.itemQuantityID)?.text.toString()
 
-               if (name.isEmpty()){
-                   Toast.makeText(context,"Enter a valid name",Toast.LENGTH_SHORT).show()
+               if (TextUtils.isEmpty(name)) {
+                   Toast.makeText(
+                       context,
+                       "Enter name of the item",
+                       Toast.LENGTH_SHORT
+                   ).show()
+                   return@setOnClickListener
                }
+
+               if (TextUtils.isEmpty(quantity)) {
+                   Toast.makeText(
+                       context,
+                       "Enter Quantity",
+                       Toast.LENGTH_SHORT
+                   ).show()
+                   return@setOnClickListener
+               }
+
                val item = ShoppingItem(
                    itemName = name,
-                   itemQuantity = quantity
+                   itemQuantity = quantity.toInt()
                )
                homeFragmentViewModel.onSaveButtonPressed(item)
                alertDialog.dismiss()
