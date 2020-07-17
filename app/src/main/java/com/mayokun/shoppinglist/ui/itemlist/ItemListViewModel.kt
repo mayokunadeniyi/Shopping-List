@@ -2,8 +2,7 @@ package com.mayokun.shoppinglist.ui.itemlist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mayokun.shoppinglist.data.database.ShoppingItemDao
 import com.mayokun.shoppinglist.data.model.ShoppingItem
 import kotlinx.coroutines.*
@@ -15,15 +14,6 @@ import kotlinx.coroutines.*
 class ItemListViewModel(
     val database: ShoppingItemDao,
     application: Application) : AndroidViewModel(application){
-    
-    private var viewModelJob = Job()
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     //Get all items in the DB
     val shoppingItems = database.getAllItems()
@@ -36,9 +26,8 @@ class ItemListViewModel(
      * @param item the edited item to be sent to the [update] function
      */
     fun onEditButtonClicked(item: ShoppingItem){
-        uiScope.launch {
+        viewModelScope.launch {
             update(item)
-
         }
     }
 
@@ -60,7 +49,7 @@ class ItemListViewModel(
      * @param item the item to be deleted.
      */
     fun onDeleteButtonPressed(item: ShoppingItem){
-        uiScope.launch {
+        viewModelScope.launch {
                 delete(item)
         }
     }
